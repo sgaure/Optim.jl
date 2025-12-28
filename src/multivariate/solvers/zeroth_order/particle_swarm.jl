@@ -238,6 +238,7 @@ function update_state!(f, state::ParticleSwarmState{T}, method::ParticleSwarm) w
     # if x_learn presents the new best solution.
     # In all other cases discard x_learn.
     # This helps jumping out of local minima.
+#=
     worst_score, i_worst = findmax(state.score)
     for k = 1:n
         state.x_learn[k] = state.x[k]
@@ -275,7 +276,7 @@ function update_state!(f, state::ParticleSwarmState{T}, method::ParticleSwarm) w
         state.score[i_worst] = score_learn
         state.best_score[i_worst] = score_learn
     end
-
+=#
     # TODO find a better name for _f (look inthe paper, it might be called f there)
     state.current_state, _f =
         get_swarm_state(state.X, state.score, state.x, state.current_state)
