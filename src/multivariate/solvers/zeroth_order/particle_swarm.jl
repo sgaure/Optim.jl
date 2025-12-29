@@ -238,8 +238,22 @@ function update_state!(f, state::ParticleSwarmState{T}, method::ParticleSwarm) w
     # if x_learn presents the new best solution.
     # In all other cases discard x_learn.
     # This helps jumping out of local minima.
-#=
+
     worst_score, i_worst = findmax(state.score)
+
+    random_index = rand(1:n)
+    random_value = randn()
+    sigma_learn = 1 - (1 - 0.1) * state.iteration / state.iterations
+
+    r3 = randn() * sigma_learn
+    if state.limit_search_space
+        up = state.upper[random_index]
+        lo = state.lower[random_index]
+        state.X[random_index, i_worst] = clamp(state.x[random_index] + (up-lo)/3.0 * r3, lo, up)
+    else
+        state.X[random_index, i_worst] += state.x[random_index]*r3
+    end
+#=
     for k = 1:n
         state.x_learn[k] = state.x[k]
     end
