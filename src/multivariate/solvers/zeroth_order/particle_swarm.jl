@@ -418,11 +418,15 @@ function get_swarm_state(X::AbstractArray{Tx}, score, best_point, previous_state
 
     f = (dg - dmin) / max(dmax - dmin, sqrt(eps(Tx)))
 
+#=
     mu = zeros(Tx, 4)
     mu[1] = get_mu_1(f)
     mu[2] = get_mu_2(f)
     mu[3] = get_mu_3(f)
     mu[4] = get_mu_4(f)
+    =#
+
+    mu = (get_mu_1(f), get_mu_2(f), get_mu_3(f), get_mu_4(f))
     best_mu, i_best_mu = findmax(mu)
     current_state = 0
 
